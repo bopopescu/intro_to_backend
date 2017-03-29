@@ -10,19 +10,19 @@
         <form method="post">
             <label>Username
                 <input type="text" name="username" value="{{username}}">
-            </label>{{error_username}}
+            </label><span style="color: red">{{error_username}}</span>
             <br>
             <label>Password
                 <input type="password" name="password" value="">
-            </label>{{error_password}}
+            </label><span style="color: red">{{error_password}}</span>
             <br>
             <label>Verify Password
                 <input type="password" name="verify" value="">
-            </label>{{error_verify}}
+            </label><span style="color: red">{{error_verify}}</span>
             <br>
             <label>Email
                 <input type="email" name="email" value="{{email}}">
-            </label>{{error_email}}
+            </label><span style="color: red">{{error_email}}</span>
             <br>
             <input type="submit">
         </form>
