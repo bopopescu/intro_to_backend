@@ -7,36 +7,39 @@
         <button>Add</button>
     </form>
 
-    <h2>Hello, q eqauls to {{q}}</h2>
-    
+    <h2>q eqauls to {{q}}</h2>
+
     <!-- FizzBuzz -->
+    <h2>FizzBuzz</h2>
     <ol>
         {% for x in range(1, q+1) %}
         <li>
             {% if x % 15 ==0 %}
-            FizzBuzz
+              FizzBuzz
             {% elif x % 5 == 0 %}
-            Buzz
+              Buzz
             {% elif x % 3 ==0 %}
-            Fizz
+              Fizz
             {% else %}
-            {{x}}
+              {{x}}
             {% endif %}
         </li>
         {% endfor %}
     </ol>
 
     <!--      Statement Syntax -->
+    <h2>If Statement</h2>
     {% if q == 1 %}
-        q equals 1
+      q equals 1
     {% else %}
-        q does not equal 1
-    {% endif %}  
+      q does not equal 1
+    {% endif %}
 
     <!--     For Loop Syntax -->
+    <h2>For Statement</h2>
     <ol>
         {% for x in range(1, q+1) %}
-        <li>{{ x ** 2 }}</li>
+          <li>{{ x ** 2 }}</li>
         {% endfor %}
     </ol>
 {% endblock %}

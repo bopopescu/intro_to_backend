@@ -3,6 +3,7 @@
 
 {% block content %}
     <!--Template-->
+    <h1>Hello, {{name}}!</h1>
     <form>
         <h2>Add a Food</h2>
         <input type="text" name="food">
@@ -14,12 +15,14 @@
         <button>Add</button>
         <br>
         <br>
+
         <h2>Shopping List</h2>
         {% if items %}
             <ul>
                 {% for item in items %}
-                    <!-- Escape Templates: escape, safe -->
-                    <li>{{ item | escape }}</li>
+                    <!-- {{item | escape}} Escape-->
+                    <!-- {{item | safe}} Don't escape if safe -->
+                    <li>{{item}}</li>
                 {% endfor %}
             </ul>
         {% endif %}
