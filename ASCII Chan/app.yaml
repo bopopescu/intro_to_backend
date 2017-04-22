@@ -6,9 +6,8 @@ threadsafe: true
 
 handlers:
 - url: /.*
-  script: templates.app
+  script: ascii-chan.app
 
 libraries:
 - name: jinja2
   version: latest
-  
