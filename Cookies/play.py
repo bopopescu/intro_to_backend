@@ -53,13 +53,12 @@ class MainPage(Handler):
         visits = 0
         visit_cookie_str = self.request.cookies.get('visits')
         if visit_cookie_str:
-            cookie_val = check_secure_val(visit_cookie_str)
+            cookie_val = check_secure_val(visit_cookie_str) #  1 | HMAC(SECRET,1)
             if cookie_val:
-                # visits = 1 | HASH(1)
                 visits = int(cookie_val)
 
         visits += 1
-        new_cookie_val = make_secure_val(str(visits)) # 2 | HASH(2)
+        new_cookie_val = make_secure_val(str(visits)) # 2 | HMAC(SECRET,2)
         self.response.headers.add_header('Set-Cookie', 'visits=%s' % new_cookie_val)
         # self.response.headers.add_header('Set-Cookie', 'visits=%s' % visits)
         # self.write("You've been here %s times!" % visits)
