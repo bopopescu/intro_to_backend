@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Unit 2: User Signup
+        </title>
+    </head>
+    <body>
+        <h2>Signup</h2>
+        <form method="post">
+            <label>Username
+                <input type="text" name="username" value="{{username}}">
+            </label><span style="color: red">{{error_username}}</span>
+            <br>
+            <label>Password
+                <input type="password" name="password" value="">
+            </label><span style="color: red">{{error_password}}</span>
+            <br>
+            <label>Verify Password
+                <input type="password" name="verify" value="">
+            </label><span style="color: red">{{error_verify}}</span>
+            <br>
+            <label>Email
+                <input type="email" name="email" value="{{email}}">
+            </label><span style="color: red">{{error_email}}</span>
+            <br>
+            <input type="submit">
+        </form>
+    </body>
+</html>
