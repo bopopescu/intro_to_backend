@@ -2,29 +2,67 @@
 
 <html>
     <head>
-        <title>Unit 2: User Signup
+        <title>Sign Up
         </title>
+        <style type="text/css">
+          .label {text-align: right}
+          .error {color: red}
+        </style>
     </head>
     <body>
         <h2>Signup</h2>
         <form method="post">
-            <label>Username
+          <table>
+            <tr>
+              <td class="label">
+                Username
+              </td>
+              <td>
                 <input type="text" name="username" value="{{username}}">
-            </label><span style="color: red">{{error_username}}</span>
-            <br>
-            <label>Password
+              </td>
+              <td class="error">
+                {{error_username}}
+              </td>
+            </tr>
+
+            <tr>
+              <td class="label">
+                Password
+              </td>
+              <td>
                 <input type="password" name="password" value="">
-            </label><span style="color: red">{{error_password}}</span>
-            <br>
-            <label>Verify Password
+              </td>
+              <td class="error">
+                {{error_password}}
+              </td>
+            </tr>
+
+            <tr>
+              <td class="label">
+                Verify Password
+              </td>
+              <td>
                 <input type="password" name="verify" value="">
-            </label><span style="color: red">{{error_verify}}</span>
-            <br>
-            <label>Email
-                <input type="email" name="email" value="{{email}}">
-            </label><span style="color: red">{{error_email}}</span>
-            <br>
-            <input type="submit">
+              </td>
+              <td class="error">
+                {{error_verify}}
+              </td>
+            </tr>
+
+            <tr>
+              <td class="label">
+                Email (optional)
+              </td>
+              <td>
+                <input type="text" name="email" value="{{email}}">
+              </td>
+              <td class="error">
+                {{error_email}}
+              </td>
+            </tr>
+          </table>
+
+          <input type="submit">
         </form>
     </body>
 </html>
