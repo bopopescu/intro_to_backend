@@ -27,6 +27,12 @@
         .art-title { font-weight: bold; font-size: 17px}
         .art-body {margin: 0; font-size: 17px}
 
+        .map {
+          position: absolute;
+          right: 112px;
+          top: 120px;
+        }
+
     </style>
 
     <body>
@@ -47,7 +53,9 @@
 
             <input type="submit">
         </form>
-
+        {% if img_url %}
+          <img class="map" src="{{img_url}}">
+        {% endif %}
         <hr>
         <!-- python embedded HTML -->
         {% for art in arts %}
