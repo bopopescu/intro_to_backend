@@ -2,6 +2,7 @@ import os
 import re
 import jinja2
 import webapp2
+import json
 from string import letters
 
 from google.appengine.ext import db
@@ -24,6 +25,19 @@ class Handler(webapp2.RequestHandler):
     def render(self, template, **kw):
         self.write(self.render_str(template, **kw))
 
+    def render_json(self, d):
+        json_text = json.dumps(d)
+        self.response.headers['Content-Type'] = 'application/json; charset=UTF-8'
+        self.write(json_text)
+
+    def initialize(self, *a, **kw):
+        webapp2.RequestHandler.initialize(self, *a, **kw)
+
+        if self.request.url.endswith('.json'):
+            self.format = 'json'
+        else:
+            self.format = 'html'
+
 
 ##### Blog ####
 def blog_key(name = 'default'):
@@ -37,17 +51,31 @@ class Post(db.Model):
     created = db.DateTimeProperty(auto_now_add = True)
     last_modified = db.DateTimeProperty(auto_now = True)
 
+    # Render in html
     def render(self):
         #replace new lines in the input html into line breaks
         self._render_text = self.content.replace('\n','<br>')
         return render_str('post.html', p = self)
+
+    # Render in json
+    def render_dict(self):
+        time_fmt = '%c'
+        d = {   'subject': self.subject,
+                'content': self.content,
+                'created': self.created.strftime(time_fmt),
+                'last_modified': self.last_modified.strftime(time_fmt)
+            }
+        return d
 
 # '/blogs'
 class BlogFront(Handler):
     def get(self):
         #posts = Post.all().order('-created') # Google procedure language
         posts = db.GqlQuery("SELECT * FROM Post ORDER BY created DESC LIMIT 10")
-        self.render('front.html', posts = posts)
+        if self.format == 'html':
+            self.render('front.html', posts = posts)
+        else:
+            self.render_json([post.render_dict() for post in posts])
 
 # '/blogs/([0-9]+)'
 class PostPage(Handler):
@@ -61,8 +89,10 @@ class PostPage(Handler):
         if not post:
             self.error(404)
             return
-
-        self.render('permalink.html', post = post)
+        if self.format == 'html':
+            self.render('permalink.html', post = post)
+        else:
+            self.render_json(post.render_dict())
 
 # '/blogs/newpost'
 class NewPost(Handler):
@@ -82,9 +112,9 @@ class NewPost(Handler):
             seld.render('newpost.html', subject = subject, content = content)
 
 # URL mapping handler
-app = webapp2.WSGIApplication([ ('/', BlogFront),
-                                ('/blogs/?', BlogFront),
-                                ('/blogs/([0-9]+)', PostPage),
+app = webapp2.WSGIApplication([ ('/?(?:\.json)?', BlogFront),
+                                ('/blogs/?(?:\.json)?', BlogFront),
+                                ('/blogs/([0-9]+)(?:\.json)?', PostPage),
                                 ('/blogs/newpost', NewPost)
                                 ],
                                 debug=True)
